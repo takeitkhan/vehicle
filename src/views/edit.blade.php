@@ -73,15 +73,6 @@
                     </div>
                 </div>
             </div>
-            <div class="columns">
-                <div class="column">
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button class="button is-success is-small">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             {{ Form::close() }}
         </div>
     </article>

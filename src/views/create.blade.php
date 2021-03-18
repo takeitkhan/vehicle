@@ -78,7 +78,7 @@
 @endsection
 
 @section('column_right')
-    <article class="is-primary">
+    <!-- <article class="is-primary">
         <div class="box">
             <h1 class="title is-5">Important Note</h1>
             <p>
@@ -93,5 +93,5 @@
                 update the information for your user.
             </p>
         </div>
-    </article>
+    </article> -->
 @endsection
