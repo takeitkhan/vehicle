@@ -3,7 +3,15 @@
 @section('title')
     Vehicles
 @endsection
-
+@if(auth()->user()->isAdmin(auth()->user()->id) || auth()->user()->isApprover(auth()->user()->id))
+    @php
+        $addUrl = route('vehicles.create');
+    @endphp
+@else
+    @php
+        $addUrl = '#';
+    @endphp
+@endif
 <section class="hero is-white borderBtmLight">
     <nav class="level">
         @include('component.title_set', [
@@ -16,9 +24,10 @@
             'spShowButtonSet' => true,
             'spAddUrl' => null,
             'spTitle' => 'Vehicles',
-            'spAddUrl' => route('vehicles.create'),
+            'spAddUrl' => $addUrl,
             'spAllData' => route('vehicles.index'),
             'spSearchData' => route('vehicles.search'),
+            'spTitle' => 'Vehicles',
         ])
 
         @include('component.filter_set', [
@@ -67,11 +76,13 @@
                                            title="View user data">
                                             <span class="icon is-small"><i class="fas fa-eye"></i></span>
                                         </a>
-                                        <a href="{{ route('vehicles.edit', $vehicle->id) }}"
-                                           class="level-item"
-                                           title="View all transaction">
-                                            <span class="icon is-info is-small"><i class="fas fa-edit"></i></span>
-                                        </a>
+                                        @if(auth()->user()->isAdmin(auth()->user()->id) || auth()->user()->isApprover(auth()->user()->id))
+                                            <a href="{{ route('vehicles.edit', $vehicle->id) }}"
+                                            class="level-item"
+                                            title="View all transaction">
+                                                <span class="icon is-info is-small"><i class="fas fa-edit"></i></span>
+                                            </a>
+                                        @endif
 
                                         {{--                                        {!! delete_data('vehicles.destroy',  $vehicle->id) !!}--}}
                                     </div>

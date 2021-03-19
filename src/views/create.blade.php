@@ -2,7 +2,15 @@
 @section('title')
     Create Vehicle
 @endsection
-
+@if(auth()->user()->isAdmin(auth()->user()->id) || auth()->user()->isApprover(auth()->user()->id))
+    @php
+        $addUrl = route('vehicles.create');
+    @endphp
+@else
+    @php
+        $addUrl = '#';
+    @endphp
+@endif
 <section class="hero is-white borderBtmLight">
     <nav class="level">
         @include('component.title_set', [
@@ -14,9 +22,10 @@
         @include('component.button_set', [
             'spShowButtonSet' => true,
             'spAddUrl' => null,
-            'spAddUrl' => route('vehicles.create'),
+            'spAddUrl' => $addUrl,
             'spAllData' => route('vehicles.index'),
             'spSearchData' => route('vehicles.search'),
+            'spTitle' => 'Vehicles',
         ])
 
         @include('component.filter_set', [
