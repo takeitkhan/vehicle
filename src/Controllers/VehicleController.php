@@ -142,4 +142,24 @@ class VehicleController extends Controller
         $this->vehicle->delete($id);
         return redirect()->back()->with(['status' => 1, 'message' => 'Successfully deleted']);
     }
+
+
+    /**
+     * Search
+     */
+
+    public function search(Request $request) {
+
+        if(!empty($request->key)) {
+            $default = [
+                'search_key' => $request->key ?? '',
+                'limit' => 10,
+                'offset' => 0
+            ];        
+            $vehicles = $this->vehicle->getDataByFilter($default);            
+        } else {
+            $vehicles = $this->vehicle->getAll();        
+        }
+        return view('vehicle::index', ['vehicles' => $vehicles]);        
+    }
 }

@@ -31,12 +31,10 @@ class VehicleEloquent implements VehicleInterface
     {
         $default = [
             'search_key' => null,
-            'column' => !empty($field) ? $field : null,
-            'sort_type' => !empty($type) ? $type : null,
             'limit' => 10,
             'offset' => 0
         ];
-        $no = array_merge($default, $options);
+        $no = array_merge($default, $options);         
 
         if (!empty($no['limit'])) {
             $limit = $no['limit'];
@@ -56,45 +54,19 @@ class VehicleEloquent implements VehicleInterface
             $orderBy = 'id desc';
         }
 
-        if (!empty($no['search_key']) && $no['search_key'] != 'undefined') {
-            if ($totalrowcount == true) {
-                return $this->model
-                    ->orWhere('name', 'like', "%{$no['search_key']}%")
-                    ->paginate($limit)
-                    ->get()->count();
-            } else {
-                return $this->model
-                    //->leftJoin('productcategories', function ($join) {
-                    //    $join->on('products.id', '=', 'productcategories.main_pid');
-                    //})
-                    ->paginate($limit)
-                    //->toSql();
-                    ->get();
-            }
+        if (!empty($no['search_key'])) {
+            $vehicles = $this->model
+            ->where('name', 'LIKE', '%'.$no['search_key'].'%')
+            ->orWhere('size', 'LIKE', '%'.$no['search_key'].'%')
+            ->orWhere('probably_cost', 'LIKE', '%'.$no['search_key'].'%')
+            ->paginate('48');
+
+            
         } else {
-            if ($totalrowcount == true) {
-                return $this->model
-                    ->whereRaw('parent_id IS NULL')
-                    //->whereRaw('FIND_IN_SET(' . implode(',', $categories) . ', categories)')
-                    //->whereRaw($price_btw)
-                    //->orderByRaw($orderBy)
-                    ->get()->count();
-            } else {
-                return $this->model
-                    ->leftJoin('productcategories AS pc', function ($join) {
-                        $join->on('products.id', '=', 'pc.main_pid');
-                    })
-                    //->whereIn('pc.term_id', $no['category'])
-                    //->whereRaw('parent_id IS NULL')
-                    //->whereRaw($price_btw)
-                    //->orderByRaw($orderBy)
-                    //->offset($offset)->limit($limit)
-                    //->toSql();
-                    //->select(['products.*', 'pc.*', 'products.id AS proid'])
-                    //->orderBy('products.id', 'desc')
-                    ->paginate(5);
-            }
+            $vehicles = [];
         }
+        
+        return $vehicles;
     }
 
 

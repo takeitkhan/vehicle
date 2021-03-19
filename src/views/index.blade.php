@@ -15,6 +15,7 @@
         @include('component.button_set', [
             'spShowButtonSet' => true,
             'spAddUrl' => null,
+            'spTitle' => 'Vehicles',
             'spAddUrl' => route('vehicles.create'),
             'spAllData' => route('vehicles.index'),
             'spSearchData' => route('vehicles.search'),
@@ -22,6 +23,9 @@
 
         @include('component.filter_set', [
             'spShowFilterSet' => true,
+            'spAddUrl' => route('vehicles.create'),
+            'spAllData' => route('vehicles.index'),
+            'spSearchData' => route('vehicles.search'),
             'spPlaceholder' => 'Search vehicles...',
             'spMessage' => $message = $message ?? NULl,
             'spStatus' => $status = $status ?? NULL
