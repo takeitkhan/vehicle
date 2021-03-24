@@ -34,7 +34,7 @@ class VehicleEloquent implements VehicleInterface
             'limit' => 10,
             'offset' => 0
         ];
-        $no = array_merge($default, $options);         
+        $no = array_merge($default, $options);
 
         if (!empty($no['limit'])) {
             $limit = $no['limit'];
@@ -61,11 +61,11 @@ class VehicleEloquent implements VehicleInterface
             ->orWhere('probably_cost', 'LIKE', '%'.$no['search_key'].'%')
             ->paginate('48');
 
-            
+
         } else {
             $vehicles = [];
         }
-        
+
         return $vehicles;
     }
 

@@ -95,7 +95,11 @@
 
         </div>
         <div class="pagination_wrap pagination is-centered">
-            {{$vehicles->links('pagination::bootstrap-4')}}
+            @if(Request::get('key'))
+                {{ $vehicles->appends(['key' => Request::get('key')])->links('pagination::bootstrap-4') }}
+            @else
+                {{ $vehicles->links('pagination::bootstrap-4') }}
+            @endif
         </div>
     @endif
 @endsection
